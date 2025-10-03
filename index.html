@@ -1,0 +1,29 @@
+<!doctype html>
+<title>Gym AI Test</title>
+<form id="f">
+  Età: <input name="eta" type="number" required><br>
+  Peso: <input name="peso" type="number" required><br>
+  Altezza: <input name="altezza" type="number" required><br>
+  Dolori: <textarea name="dolori"></textarea><br>
+  Obiettivo:
+  <select name="obiettivo">
+    <option>perdere peso</option>
+    <option>aumentare massa</option>
+    <option>resistenza</option>
+  </select><br>
+  <button>Genera</button>
+</form>
+<pre id="o"></pre>
+<script>
+f.onsubmit=async(e)=>{
+  e.preventDefault();
+  const d=Object.fromEntries(new FormData(f).entries());
+  const r=await fetch("/.netlify/functions/scheda",{
+    method:"POST",
+    body:JSON.stringify(d),
+    headers:{"Content-Type":"application/json"}
+  });
+  const j=await r.json();
+  o.innerText=j.scheda;
+};
+</script>
